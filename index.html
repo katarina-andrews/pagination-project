@@ -4,12 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Pagination</title>
+    <title>Open Breweries</title>
   </head>
   <body>
-    <div id="post-container"></div>
+    <header><h1>Breweries</h1></header>
+    <main>
+        <section>
+            <form
+          onsubmit="handlesSubmitCitySearch(event)"
+          class = "flex flex-col"
+        >
+          <label for="search-title">Search by City</label>
+          <input class="border border-red-400" type="text" name="search-city" id="search-city" />
+          <button
+            class="border border-red-400"
+            type="submit"
+          >
+            Search
+          </button>
+        </form>
+
+
+            </form>
+        </section>
+      <section id="brewery-container"></section>
+      <section id="pagination-section">
+      </section>
     <button id="previous">Previous</button>
-    <button id="next">Next</button>
+      <button id="next">Next</button>
+    </main>
+    <footer></footer>
+
     <script src="pagination.js"></script>
   </body>
 </html>

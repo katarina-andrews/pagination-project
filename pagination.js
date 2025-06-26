@@ -1,14 +1,13 @@
 const state = {
   currentPage: 1,
-  currentPosts: "",
+  currentCity: "",
 };
 
-
-async function fetchPosts(page, posts) {
- state.currentPosts = posts;
+async function searchByCity(city, page) {
+  state.currentCity = city;
   try {
     const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`
+      `https://api.openbrewerydb.org/v1/breweries?by_city=${city}&page=${page}&per_page=10`
     );
     if (!response.ok) {
       throw new Error("Network error. Status: ", response.status);
@@ -18,15 +17,90 @@ async function fetchPosts(page, posts) {
     console.log(data);
     return data;
   } catch (error) {
-    console.log("ERROR Fetching by posts: ", error.message);
+    console.log("ERROR Fetching by city: ", error.message);
   } finally {
-    console.log("Finished fetching by posts");
+    console.log("Finished fetching by city");
   }
- }
+}
 
- fetchPosts(1)
- fetchPosts(2)
+searchByCity("san diego", 1);
+searchByCity("philadelphia", 2);
 
-// function renderPosts(posts) {
+function renderBreweries(breweryData) {
+  const breweryContainer = document.getElementById("brewery-container");
+  breweryContainer.innerHTML = "";
+  // breweryContainer.className = "border red"
 
-// }
+  if (breweryData.length === 0) {
+    const noDataElm = document.createElement("p");
+    noDataElm.innerText = "No breweries found.";
+    noDataElm.className = "font-bold";
+    breweryContainer.appendChild(noDataElm);
+    return;
+  }
+
+  breweryData.forEach((breweries) => {
+    const breweryElm = document.createElement("div");
+
+    const nameElm = document.createElement("p");
+    nameElm.innerHTML = breweries.name;
+    nameElm.className = "font-bold";
+
+    const cityElm = document.createElement("p");
+    cityElm.innerHTML = breweries.city;
+
+    const addressElm = document.createElement("p");
+    addressElm.innerHTML = breweries.street;
+
+    breweryElm.appendChild(nameElm);
+    breweryElm.appendChild(cityElm);
+    breweryElm.appendChild(addressElm);
+
+    breweryContainer.appendChild(breweryElm);
+  });
+}
+
+async function handlesSubmitCitySearch(event) {
+  event.preventDefault();
+
+  const city = event.target["search-city"].value;
+  console.log(city);
+
+  const data = await searchByCity(city, state.currentPage);
+
+  renderBreweries(data);
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const paginationContainer = document.getElementById("pagination-section");
+  paginationContainer.innerHTML = "";
+  const prevBtn = document.getElementById("previous");
+  const nextBtn = document.getElementById("next");
+
+  prevBtn.disabled = state.currentPage === 1;
+  //   nextBtn.disabled = ;
+
+  nextBtn.onclick = async () => {
+    state.currentPage++;
+    const data = await searchByCity(state.currentCity, state.currentPage);
+    renderBreweries(data);
+    renderPagination();
+  };
+
+  prevBtn.onclick = async () => {
+    if (state.currentPage > 1) {
+      state.currentPage--;
+      const data = await searchByCity(state.currentCity, state.currentPage);
+      renderBreweries(data);
+      renderPagination();
+    }
+  };
+
+  const pageCountElem = document.createElement("p");
+  //   pageCountElem.className = " ";
+  pageCountElem.innerHTML = `Page ${state.currentPage}`;
+
+  paginationContainer.appendChild(pageCountElem);
+}
