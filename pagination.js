@@ -23,8 +23,8 @@ async function searchByCity(city, page) {
   }
 }
 
-searchByCity("san diego", 1);
-searchByCity("philadelphia", 2);
+// searchByCity("san diego", 1);
+// searchByCity("philadelphia", 2);
 
 function renderBreweries(breweryData) {
   const breweryContainer = document.getElementById("brewery-container");
@@ -68,29 +68,30 @@ async function handlesSubmitCitySearch(event) {
   event.preventDefault();
 
   const city = event.target["search-city"].value;
-  console.log(city);
+  state.currentPage = 1;
+  state.currentCity = city;
 
   const data = await searchByCity(city, state.currentPage);
 
   renderBreweries(data);
 
-  renderPagination();
+  renderPagination(data.length);
 }
 
-function renderPagination() {
+function renderPagination(currentPageDataLength) {
   const paginationContainer = document.getElementById("pagination-section");
   paginationContainer.innerHTML = "";
   const prevBtn = document.getElementById("previous");
   const nextBtn = document.getElementById("next");
 
   prevBtn.disabled = state.currentPage === 1;
-//   nextBtn.disabled = ;
+  nextBtn.disabled = currentPageDataLength < 10;
 
   nextBtn.onclick = async () => {
     state.currentPage++;
     const data = await searchByCity(state.currentCity, state.currentPage);
     renderBreweries(data);
-    renderPagination();
+    renderPagination(data.length);
   };
 
   prevBtn.onclick = async () => {
@@ -98,7 +99,7 @@ function renderPagination() {
       state.currentPage--;
       const data = await searchByCity(state.currentCity, state.currentPage);
       renderBreweries(data);
-      renderPagination();
+      renderPagination(data.length);
     }
   };
 
