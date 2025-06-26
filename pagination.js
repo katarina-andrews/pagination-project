@@ -49,12 +49,16 @@ function renderBreweries(breweryData) {
     const cityElm = document.createElement("p");
     cityElm.innerHTML = breweries.city;
 
-    const addressElm = document.createElement("p");
-    addressElm.innerHTML = breweries.street;
+    const stateElm = document.createElement("p");
+    stateElm.innerHTML = breweries.state;
+
+    const streetElm = document.createElement("p");
+    streetElm.innerHTML = breweries.street;
 
     breweryElm.appendChild(nameElm);
     breweryElm.appendChild(cityElm);
-    breweryElm.appendChild(addressElm);
+    breweryElm.appendChild(stateElm);
+    breweryElm.appendChild(streetElm);
 
     breweryContainer.appendChild(breweryElm);
   });
@@ -80,7 +84,7 @@ function renderPagination() {
   const nextBtn = document.getElementById("next");
 
   prevBtn.disabled = state.currentPage === 1;
-  //   nextBtn.disabled = ;
+//   nextBtn.disabled = ;
 
   nextBtn.onclick = async () => {
     state.currentPage++;
