@@ -6,18 +6,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Open Breweries</title>
   </head>
-  <body>
-    <header><h1>Breweries</h1></header>
-    <main>
+  <body class="bg-amber-100">
+    <header><h1 class="text-7xl text-amber-500 text-center p-2">Breweries</h1></header>
+    <main class="w-[90vw] mx-auto">
         <section>
             <form
           onsubmit="handlesSubmitCitySearch(event)"
-          class = "flex flex-col"
+          class = "flex flex-col gap-2"
         >
           <label for="search-title">Search by City</label>
-          <input class="border border-red-400" type="text" name="search-city" id="search-city" />
+          <input class="border-2 border-amber-300 p-2 bg-amber-50" type="text" name="search-city" id="search-city" />
           <button
-            class="border border-red-400"
+            class="border-2 p-2 border-amber-300 hover:cursor-pointer hover:bg-amber-50 text-amber-500"
             type="submit"
           >
             Search
@@ -27,11 +27,13 @@
 
             </form>
         </section>
-      <section id="brewery-container"></section>
+      <section id="brewery-container" class="grid grid-cols-2 gap-2 p-2"></section>
       <section id="pagination-section">
       </section>
-    <button id="previous">Previous</button>
-      <button id="next">Next</button>
+      <section class="flex justify-between my-2 w-full align-middle">
+    <button id="previous" class="border-2 p-2 border-amber-300 hover:cursor-pointer hover:bg-amber-50 text-amber-500">Previous</button>
+      <button id="next" class="border-2 p-2 border-amber-300 hover:cursor-pointer hover:bg-amber-50 text-amber-500">Next</button>
+      </section>
     </main>
     <footer></footer>
 
