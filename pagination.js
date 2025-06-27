@@ -53,7 +53,7 @@ function renderBreweries(breweryData) {
     stateElm.innerHTML = breweries.state;
 
     const streetElm = document.createElement("p");
-    streetElm.innerHTML = breweries.street || "Address not found." ;
+    streetElm.innerHTML = breweries.street || "Address not found.";
 
     breweryElm.appendChild(nameElm);
     breweryElm.appendChild(cityElm);
@@ -81,23 +81,30 @@ function renderPagination(currentPageDataLength) {
   };
 
   prevBtn.onclick = async () => {
-      state.currentPage--;
-      const data = await searchByCity(state.currentCity, state.currentPage);
-      renderBreweries(data);
-      renderPagination(data.length);
+    state.currentPage--;
+    const data = await searchByCity(state.currentCity, state.currentPage);
+    renderBreweries(data);
+    renderPagination(data.length);
   };
 
   const pageCountElem = document.createElement("p");
   //   pageCountElem.className = " ";
   pageCountElem.innerHTML = `Page ${state.currentPage}`;
-  pageCountElem.className = "text-center"
+  pageCountElem.className = "text-center";
   paginationContainer.appendChild(pageCountElem);
 }
 
 async function handlesSubmitCitySearch(event) {
   event.preventDefault();
 
+  const breweryContainer = document.getElementById("brewery-container");
+  breweryContainer.innerHTML = "";
   const city = event.target["search-city"].value;
+
+  if (!city) {
+    breweryContainer.innerHTML = "Please enter a city name.";
+    return; 
+  }
   state.currentPage = 1;
   state.currentCity = city;
 
