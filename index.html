@@ -7,17 +7,17 @@
     <title>Open Breweries</title>
   </head>
   <body class="bg-amber-100">
-    <header><h1 class="text-7xl text-amber-500 text-center p-2">Breweries</h1></header>
+    <header><h1 class="text-7xl text-amber-600 text-center p-2">Breweries</h1></header>
     <main class="w-[90vw] mx-auto">
         <section>
             <form
           onsubmit="handlesSubmitCitySearch(event)"
           class = "flex flex-col gap-2"
         >
-          <label for="search-title">Search by City</label>
-          <input class="border-2 border-amber-300 p-2 bg-amber-50" type="text" name="search-city" id="search-city" />
+          <label for="search-title" class="text-amber-500">Search by City</label>
+          <input class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600" type="text" name="search-city" id="search-city" />
           <button
-            class="border-2 p-2 border-amber-300 hover:cursor-pointer hover:bg-amber-50 text-amber-500"
+            class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 "
             type="submit"
           >
             Search
@@ -31,8 +31,8 @@
       <section id="pagination-section">
       </section>
       <section class="flex justify-between my-2 w-full align-middle">
-    <button id="previous" class="border-2 p-2 border-amber-300 hover:cursor-pointer hover:bg-amber-50 text-amber-500">Previous</button>
-      <button id="next" class="border-2 p-2 border-amber-300 hover:cursor-pointer hover:bg-amber-50 text-amber-500">Next</button>
+    <button id="previous" class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400">Previous</button>
+      <button id="next" class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400">Next</button>
       </section>
     </main>
     <footer></footer>

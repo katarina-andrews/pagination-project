@@ -23,9 +23,6 @@ async function searchByCity(city, page) {
   }
 }
 
-searchByCity("san diego", 1);
-searchByCity("philadelphia", 2);
-
 function renderBreweries(breweryData) {
   const breweryContainer = document.getElementById("brewery-container");
   breweryContainer.innerHTML = "";
@@ -90,7 +87,7 @@ function renderPagination(currentPageDataLength) {
   const pageCountElem = document.createElement("p");
   //   pageCountElem.className = " ";
   pageCountElem.innerHTML = `Page ${state.currentPage}`;
-  pageCountElem.className = "text-center";
+  pageCountElem.className = "text-center font-bold text-amber-500";
   paginationContainer.appendChild(pageCountElem);
 }
 
