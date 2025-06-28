@@ -1,10 +1,13 @@
 const state = {
   currentPage: 1,
   currentCity: "",
+  isRateLimit: false,
 };
 
 async function searchByCity(city, page) {
   state.currentCity = city;
+  state.isRateLimit = true;
+
   try {
     const response = await fetch(
       `https://api.openbrewerydb.org/v1/breweries?by_city=${city}&page=${page}&per_page=10`
@@ -100,14 +103,21 @@ async function handlesSubmitCitySearch(event) {
 
   if (!city) {
     breweryContainer.innerHTML = "Please enter a city name.";
-    return; 
+    return;
   }
+
+  if (state.isRateLimit === false) {
+    const data = await searchByCity(city, state.currentPage);
+
+    renderBreweries(data);
+
+    renderPagination(data.length);
+  } else {
+    alert("Rate limit exceeded. Please wait.");
+  }
+
   state.currentPage = 1;
   state.currentCity = city;
 
-  const data = await searchByCity(city, state.currentPage);
-
-  renderBreweries(data);
-
-  renderPagination(data.length);
+  setTimeout(() => (state.isRateLimit = false), 2000);
 }
