@@ -74,21 +74,36 @@ function renderPagination(currentPageDataLength) {
   nextBtn.disabled = currentPageDataLength < 10;
 
   nextBtn.onclick = async () => {
+    if (state.isRateLimit) {
+      alert("Rate limit exceeded. Please wait.");
+      return;
+    }
+
+    state.isRateLimit = true;
     state.currentPage++;
     const data = await searchByCity(state.currentCity, state.currentPage);
     renderBreweries(data);
     renderPagination(data.length);
   };
 
+  setTimeout(() => (state.isRateLimit = false), 2000);
+
   prevBtn.onclick = async () => {
+    if (state.isRateLimit || state.currentPage === 1) {
+      if (state.isRateLimit) alert("Rate limit exceeded. Please wait.");
+      return;
+    }
+
+    state.isRateLimit = true;
     state.currentPage--;
     const data = await searchByCity(state.currentCity, state.currentPage);
     renderBreweries(data);
     renderPagination(data.length);
+
+    setTimeout(() => (state.isRateLimit = false), 2000);
   };
 
   const pageCountElem = document.createElement("p");
-  //   pageCountElem.className = " ";
   pageCountElem.innerHTML = `Page ${state.currentPage}`;
   pageCountElem.className = "text-center font-bold text-amber-500";
   paginationContainer.appendChild(pageCountElem);
@@ -106,6 +121,9 @@ async function handlesSubmitCitySearch(event) {
     return;
   }
 
+  state.currentPage = 1;
+  state.currentCity = city;
+
   if (state.isRateLimit === false) {
     const data = await searchByCity(city, state.currentPage);
 
@@ -115,9 +133,6 @@ async function handlesSubmitCitySearch(event) {
   } else {
     alert("Rate limit exceeded. Please wait.");
   }
-
-  state.currentPage = 1;
-  state.currentCity = city;
 
   setTimeout(() => (state.isRateLimit = false), 2000);
 }
