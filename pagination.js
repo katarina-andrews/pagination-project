@@ -64,14 +64,14 @@ function renderBreweries(breweryData) {
   });
 }
 
-function renderPagination(currentPageDataLength) {
+function renderPagination(pageData) {
   const paginationContainer = document.getElementById("pagination-section");
   paginationContainer.innerHTML = "";
   const prevBtn = document.getElementById("previous");
   const nextBtn = document.getElementById("next");
 
   prevBtn.disabled = state.currentPage === 1;
-  nextBtn.disabled = currentPageDataLength < 10;
+  nextBtn.disabled = pageData < 10;
 
   nextBtn.onclick = async () => {
     if (state.isRateLimit) {
@@ -89,8 +89,8 @@ function renderPagination(currentPageDataLength) {
   setTimeout(() => (state.isRateLimit = false), 2000);
 
   prevBtn.onclick = async () => {
-    if (state.isRateLimit || state.currentPage === 1) {
-      if (state.isRateLimit) alert("Rate limit exceeded. Please wait.");
+    if (state.isRateLimit) {
+      alert("Rate limit exceeded. Please wait.");
       return;
     }
 
