@@ -4,12 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Pagination</title>
+    <title>Pagination Project</title>
   </head>
-  <body>
-    <div id="post-container"></div>
-    <button id="previous">Previous</button>
-    <button id="next">Next</button>
+  <body class="bg-amber-100">
+    <header>
+      <h1 class="text-7xl text-amber-600 text-center py-5">Posts</h1>
+    </header>
+    <main class="w-[90vw] mx-auto">
+      <section
+        id="posts-container"
+        class="grid grid-cols-2 gap-2 p-2"
+      ></section>
+      <section id="pagination-container"></section>
+      <section class="flex justify-between my-2 w-full align-middle">
+        <button
+          id="previous"
+          class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400"
+        >
+          Previous
+        </button>
+        <button
+          id="next"
+          class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400"
+        >
+          Next
+        </button>
+      </section>
+    </main>
+    <footer></footer>
     <script src="pagination.js"></script>
   </body>
 </html>
